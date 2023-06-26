@@ -1,13 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import reactLogo from "./assets/react.svg"
+import viteLogo from "/vite.svg"
+import "./App.css"
+import { AppProvider } from "providers/AppProvider"
+import { useCounter } from "hooks"
+import { Button } from "@mui/material"
+import { useStore } from "store/useStore"
 
-function App() {
-  const [count, setCount] = useState(0)
+export const App = () => {
+  const { count, increaseCounter } = useCounter()
+
+  const { signIn, signOut } = useStore((state) => state.auth)
 
   return (
-    <>
+    <AppProvider>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -18,18 +23,23 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <Button variant="contained" onClick={increaseCounter}>
           count is {count}
-        </button>
+        </Button>
+
+        <Button variant="contained" onClick={signIn}>
+          Login
+        </Button>
+        <Button variant="contained" onClick={signOut}>
+          Logout
+        </Button>
+
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
+        <button>djdjdj</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <p className="read-the-docs bg-black">Click on the Vite and React logos to learn more</p>
+    </AppProvider>
   )
 }
-
-export default App
