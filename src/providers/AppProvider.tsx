@@ -1,7 +1,16 @@
 import { PropsWithChildren } from "react"
 import { ThemeProvider } from "@emotion/react"
-import theme from "theme/theme"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import theme from "common/theme"
 
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  const queryClient = new QueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </QueryClientProvider>
+  )
 }

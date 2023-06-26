@@ -1,6 +1,6 @@
 import { create } from "zustand"
-import { AuthState, createAuthSlice } from "./authSlice"
 import { devtools } from "zustand/middleware"
+import { AuthState, createAuthSlice } from "./slices"
 
 export type Store = AuthState
 

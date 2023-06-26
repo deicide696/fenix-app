@@ -1,5 +1,6 @@
 import { StateCreator } from "zustand"
-import { Store, StoreMiddelwares } from "./useStore"
+import { produce } from "immer"
+import { Store, StoreMiddelwares } from "../useStore"
 
 export interface AuthState {
   auth: {
@@ -16,22 +17,16 @@ export const createAuthSlice: StateCreator<Store, StoreMiddelwares, [], AuthStat
     userName: "",
     signOut: () =>
       set(
-        (state) => ({
-          auth: {
-            ...state.auth,
-            isAuth: false,
-          },
+        produce((state: AuthState) => {
+          state.auth.isAuth = false
         }),
         false,
         { type: "AUTH/SIGN_OUT" },
       ),
     signIn: () =>
       set(
-        (state) => ({
-          auth: {
-            ...state.auth,
-            isAuth: true,
-          },
+        produce((state: AuthState) => {
+          state.auth.isAuth = true
         }),
         false,
         { type: "AUTH/SIGN_IN" },
